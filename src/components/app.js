@@ -9,6 +9,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
     this.testMeth = this.testMeth.bind(this);
     this.checkRow = this.checkRow.bind(this);
     this.checkBlocks = this.checkBlocks.bind(this);
@@ -74,7 +75,7 @@ class App extends Component {
     }
 
     for (let key in storeOfCoord) {
-      if (storeOfCoord[key].indexOf(x+''+y) !== -1) {
+      if (storeOfCoord[key].includes(x+''+y)) {
         return detectRegion(key);
       }
     }
@@ -127,7 +128,7 @@ class App extends Component {
               this.props.state.map((elem, i) => {
                 return <tr>
                 {elem.map((item, j) =>
-                  (item === ' ' || this.checkBlocks(i, j).indexOf(item) !== -1 || this.checkRow(i, j).indexOf(item) !== -1 || this.checkCollumn(j, i).indexOf(item) !== -1) ?
+                  (item === ' ' || this.checkBlocks(i, j).includes(item) || this.checkRow(i, j).includes(item) || this.checkCollumn(j, i).includes(item)) ?
                     <td
                       style={{color:'red'}}
                       onClick={ () => { this.testMeth(i,j)}}>
