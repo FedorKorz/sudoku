@@ -21,75 +21,65 @@ export function generateSudoku() {
     }
   };
 
-  let constValue1 = {
+  let obj_1 = {
     value: 1,
     freezed: true
   };
 
-  let constValue2 = {
+  let obj_2 = {
     value: 2,
     freezed: true
   };
 
-  let constValue3 = {
+  let obj_3 = {
     value: 3,
     freezed: true
   };
 
-  let constValue4 = {
+  let obj_4 = {
     value: 4,
     freezed: true
   };
 
-  let constValue5 = {
+  let obj_5 = {
     value: 5,
     freezed: true
   };
 
-  let constValue6 = {
+  let obj_6 = {
     value: 6,
     freezed: true
   };
 
-  let constValue7 = {
+  let obj_7 = {
     value: 7,
     freezed: true
   };
 
-  let constValue8 = {
+  let obj_8 = {
     value: 8,
     freezed: true
   };
 
-  let constValue9 = {
+  let obj_9 = {
     value: 9,
     freezed: true
   };
 
-  let freeSpace = {
+  let spc = {
     value: '___',
     freezed: false
   };
 
-  var grid = new Grid([[ constValue5, constValue3, freeSpace, freeSpace, constValue7, freeSpace, freeSpace, freeSpace, freeSpace ],
-                       [ constValue6, freeSpace, freeSpace, constValue1, constValue9, constValue5, freeSpace, freeSpace, freeSpace ],
-                       [ freeSpace, constValue9, constValue8, freeSpace, freeSpace, freeSpace, freeSpace, constValue6, freeSpace ],
-                       [ constValue8, freeSpace, freeSpace, freeSpace, constValue6, freeSpace, freeSpace, freeSpace, constValue3 ],
-                       [ constValue4, freeSpace, freeSpace, constValue8, freeSpace, constValue3, freeSpace, freeSpace, constValue1 ],
-                       [ constValue7, freeSpace, freeSpace, freeSpace, constValue2, freeSpace, freeSpace, freeSpace, constValue6 ],
-                       [ freeSpace, constValue6, freeSpace, freeSpace, freeSpace, freeSpace, constValue2, constValue8, freeSpace ],
-                       [ freeSpace, freeSpace, freeSpace, constValue4, constValue1, constValue9, freeSpace, freeSpace, constValue5 ],
-                       [ freeSpace, freeSpace, freeSpace, freeSpace, constValue8, freeSpace, freeSpace, constValue7, constValue9 ]]);
-
- // var grid = new Grid([[ 5, 3, ' ', ' ', 7, ' ', ' ', ' ', ' ' ],
- //                      [ 6, ' ', ' ', 1, 9, 5, ' ', ' ', ' ' ],
- //                      [ ' ', 9, 8, ' ', ' ', ' ', ' ', 6, ' ' ],
- //                      [ 8, ' ', ' ', ' ', 6, ' ', ' ', ' ', 3 ],
- //                      [ 4, ' ', ' ', 8, ' ', 3, ' ', ' ', 1 ],
- //                      [ 7, ' ', ' ', ' ', 2, ' ', ' ', ' ', 6 ],
- //                      [ ' ', 6, ' ', ' ', ' ', ' ', 2, 8, ' ' ],
- //                      [ ' ', ' ', ' ', 4, 1, 9, ' ', ' ', 5 ],
- //                      [ ' ', ' ', ' ', ' ', 8, ' ', ' ', 7, 9 ]]);
+  var grid = new Grid([[ obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9 ],
+                       [ obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_1, obj_2, obj_3 ],
+                       [ obj_7, obj_8, obj_9, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6 ],
+                       [ obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_1 ],
+                       [ obj_5, obj_6, obj_7, obj_8, obj_9, obj_1, obj_2, obj_3, obj_4 ],
+                       [ obj_8, obj_9, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7 ],
+                       [ obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_1, obj_2 ],
+                       [ obj_6, obj_7, obj_8, obj_9, obj_1, obj_2, obj_3, obj_4, obj_5 ],
+                       [ obj_9, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8 ]]);
 
   Grid.prototype.transposing = function() {
     this.field = this.field.map(
@@ -173,12 +163,14 @@ export function generateSudoku() {
   }
 
   Grid.prototype.generateEmptyCells = function() {
-    for (let i = 0; i < 10; i++) {
-      let rnd = Math.floor(Math.random() * (10));
+    for (let i = 0; i < 20; i++) {
+      let rndOne = Math.floor(Math.random() * (8));
+      let rndTwo = Math.floor(Math.random() * (8));
+      grid.field[rndOne][rndTwo] = spc;
     }
   }
 
-  // grid.randomize();
+  grid.randomize();
   grid.generateEmptyCells();
 
   function getRandom(min, max) {

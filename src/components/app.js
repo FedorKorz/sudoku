@@ -34,12 +34,9 @@ class App extends Component {
 
   findDuplicates(array) {
     function compare(a,b) {
-      if (a.value === '___' || b.value === '___') {
-        return 1;
-      }
       if (a.value < b.value)
         return -1;
-      if (a.value > b.value)
+      if (a.value > b.value || a.value === '___' || b.value === '___')
         return 1;
       return 0;
     }
@@ -51,8 +48,8 @@ class App extends Component {
     console.log(array);
     array.map((elem, i, a) => {
       if (a[i+1] !== undefined) {
-        if (a[i+1].value == a[i].value && a[i].value !== '__') {
-          (dup.indexOf(a[i].value) === -1) ? dup.push(a[i].value) : []
+        if (a[i+1].value == a[i].value) {
+          (!dup.includes(a[i].value)) ? dup.push(a[i].value) : []
         }
       }
     });
@@ -67,11 +64,11 @@ class App extends Component {
   }
 
   checkCollumn(i, j) {
-    let transArr = this.props.state.map(
-      (row, y, arr) => row.map(
-        (cell, x, line) => arr[x][y]
-      )
-    )[i].sort();
+  let transArr = this.props.state.map(
+    (row, y, arr) => row.map(
+      (cell, x, line) => arr[x][y]
+    )
+  )[i].sort();
     return this.findDuplicates(transArr);
   }
 
@@ -99,7 +96,7 @@ class App extends Component {
                    {elem.map((item, j) =>
                        <td>
                           { (item.freezed) ?
-                            <span style ={{color:'blue'}}> { this.props.state[i][j].value } </span> :
+                            <span style ={{background:'grey'}}> { this.props.state[i][j].value } </span> :
                             <span onClick={ () => this.testMeth(i, j) }>
                               {
                                 this.checkRow(i, j).includes(item.value) ||
@@ -108,7 +105,6 @@ class App extends Component {
                                   <span style={{color:'red'}}> { item.value } </span> :
                                     item.value
                               }
-                              
                             </span>}
                         </td>)}
                        </tr>})
