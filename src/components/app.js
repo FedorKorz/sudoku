@@ -16,7 +16,6 @@ class App extends Component {
     this.togglePopup = this.togglePopup.bind(this);
     this.checkCollumn = this.checkCollumn.bind(this);
     this.findDuplicates = this.findDuplicates.bind(this);
-    this.checkAllDirections = this.checkAllDirections.bind(this);
     this.onButtonGenerateSudoku = this.onButtonGenerateSudoku.bind(this);
   }
 
@@ -29,25 +28,30 @@ class App extends Component {
   }
 
   testMeth(x,y) {
-    console.log('testMeth');
     this.togglePopup();
     this.props.markItem(x, y);
   }
 
   findDuplicates(array) {
-    function compare(a, b) {
-      if (a.value > b.value) {
+    function compare(a,b) {
+      if (a.value === '___' || b.value === '___') {
         return 1;
       }
-      return -1;
+      if (a.value < b.value)
+        return -1;
+      if (a.value > b.value)
+        return 1;
+      return 0;
     }
 
     let dup = [];
 
-    array = array.sort().sort(compare);
+    array = array.sort(compare);
+    console.log('Отсортированный массив');
+    console.log(array);
     array.map((elem, i, a) => {
       if (a[i+1] !== undefined) {
-        if (a[i+1].value == a[i].value && a[i].value !== ' ') {
+        if (a[i+1].value == a[i].value && a[i].value !== '__') {
           (dup.indexOf(a[i].value) === -1) ? dup.push(a[i].value) : []
         }
       }
@@ -57,6 +61,8 @@ class App extends Component {
   }
 
   checkRow(row) {
+    console.log('Нужно проверить ряд ' + row);
+    console.log(this.props.state[row]);
     return this.findDuplicates(this.props.state[row].slice());
   }
 
@@ -82,10 +88,6 @@ class App extends Component {
     return this.findDuplicates(tempArr);
   }
 
-  checkAllDirections() {
-    
-  }
-
   render() {
     return (
       <div>
@@ -96,7 +98,18 @@ class App extends Component {
                 return <tr>
                    {elem.map((item, j) =>
                        <td>
-                          { item.freezed ? <span style ={{color:'blue'}}> { this.props.state[i][j].value } </span> : <span onClick={ () => this.testMeth(i, j) }> {this.checkBlocks(i, j).includes(item.value) || this.checkRow(i, j).includes(item.value) || this.checkBlocks(i, j).includes(item.value) ? <span style={{color:'red'}}>{ item.value }</span> : item.value } </span>}
+                          { (item.freezed) ?
+                            <span style ={{color:'blue'}}> { this.props.state[i][j].value } </span> :
+                            <span onClick={ () => this.testMeth(i, j) }>
+                              {
+                                this.checkRow(i, j).includes(item.value) ||
+                                this.checkCollumn(j, i).includes(item.value) ||
+                                this.checkBlocks(i, j).includes(item.value) ?
+                                  <span style={{color:'red'}}> { item.value } </span> :
+                                    item.value
+                              }
+                              
+                            </span>}
                         </td>)}
                        </tr>})
             }
