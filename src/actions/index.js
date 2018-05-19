@@ -1,3 +1,5 @@
+import createFragment from 'react-addons-create-fragment';
+
 export const GENERATE_SUDOKU_ARRAY = "GENERATE_SUDOKU_ARRAY";
 export const INSERT_VALUE = "INSERT_VALUE";
 export const СLOSE_POPUP = "СLOSE_POPUP";
@@ -19,15 +21,75 @@ export function generateSudoku() {
     }
   };
 
-  var grid = new Grid([[ 5, 3, ' ', ' ', 7, ' ', ' ', ' ', ' ' ],
-                       [ 6, ' ', ' ', 1, 9, 5, ' ', ' ', ' ' ],
-                       [ ' ', 9, 8, ' ', ' ', ' ', ' ', 6, ' ' ],
-                       [ 8, ' ', ' ', ' ', 6, ' ', ' ', ' ', 3 ],
-                       [ 4, ' ', ' ', 8, ' ', 3, ' ', ' ', 1 ],
-                       [ 7, ' ', ' ', ' ', 2, ' ', ' ', ' ', 6 ],
-                       [ ' ', 6, ' ', ' ', ' ', ' ', 2, 8, ' ' ],
-                       [ ' ', ' ', ' ', 4, 1, 9, ' ', ' ', 5 ],
-                       [ ' ', ' ', ' ', ' ', 8, ' ', ' ', 7, 9 ]]);
+  let constValue1 = {
+    value: 1,
+    freezed: true
+  };
+
+  let constValue2 = {
+    value: 2,
+    freezed: true
+  };
+
+  let constValue3 = {
+    value: 3,
+    freezed: true
+  };
+
+  let constValue4 = {
+    value: 4,
+    freezed: true
+  };
+
+  let constValue5 = {
+    value: 5,
+    freezed: true
+  };
+
+  let constValue6 = {
+    value: 6,
+    freezed: true
+  };
+
+  let constValue7 = {
+    value: 7,
+    freezed: true
+  };
+
+  let constValue8 = {
+    value: 8,
+    freezed: true
+  };
+
+  let constValue9 = {
+    value: 9,
+    freezed: true
+  };
+
+  let freeSpace = {
+    value: '___',
+    freezed: false
+  };
+
+  var grid = new Grid([[ constValue5, constValue3, freeSpace, freeSpace, constValue7, freeSpace, freeSpace, freeSpace, freeSpace ],
+                       [ constValue6, freeSpace, freeSpace, constValue1, constValue9, constValue5, freeSpace, freeSpace, freeSpace ],
+                       [ freeSpace, constValue9, constValue8, freeSpace, freeSpace, freeSpace, freeSpace, constValue6, freeSpace ],
+                       [ constValue8, freeSpace, freeSpace, freeSpace, constValue6, freeSpace, freeSpace, freeSpace, constValue3 ],
+                       [ constValue4, freeSpace, freeSpace, constValue8, freeSpace, constValue3, freeSpace, freeSpace, constValue1 ],
+                       [ constValue7, freeSpace, freeSpace, freeSpace, constValue2, freeSpace, freeSpace, freeSpace, constValue6 ],
+                       [ freeSpace, constValue6, freeSpace, freeSpace, freeSpace, freeSpace, constValue2, constValue8, freeSpace ],
+                       [ freeSpace, freeSpace, freeSpace, constValue4, constValue1, constValue9, freeSpace, freeSpace, constValue5 ],
+                       [ freeSpace, freeSpace, freeSpace, freeSpace, constValue8, freeSpace, freeSpace, constValue7, constValue9 ]]);
+
+ // var grid = new Grid([[ 5, 3, ' ', ' ', 7, ' ', ' ', ' ', ' ' ],
+ //                      [ 6, ' ', ' ', 1, 9, 5, ' ', ' ', ' ' ],
+ //                      [ ' ', 9, 8, ' ', ' ', ' ', ' ', 6, ' ' ],
+ //                      [ 8, ' ', ' ', ' ', 6, ' ', ' ', ' ', 3 ],
+ //                      [ 4, ' ', ' ', 8, ' ', 3, ' ', ' ', 1 ],
+ //                      [ 7, ' ', ' ', ' ', 2, ' ', ' ', ' ', 6 ],
+ //                      [ ' ', 6, ' ', ' ', ' ', ' ', 2, 8, ' ' ],
+ //                      [ ' ', ' ', ' ', 4, 1, 9, ' ', ' ', 5 ],
+ //                      [ ' ', ' ', ' ', ' ', 8, ' ', ' ', 7, 9 ]]);
 
   Grid.prototype.transposing = function() {
     this.field = this.field.map(
@@ -113,11 +175,10 @@ export function generateSudoku() {
   Grid.prototype.generateEmptyCells = function() {
     for (let i = 0; i < 10; i++) {
       let rnd = Math.floor(Math.random() * (10));
-
     }
   }
 
-  grid.randomize();
+  // grid.randomize();
   grid.generateEmptyCells();
 
   function getRandom(min, max) {
@@ -132,10 +193,13 @@ export function generateSudoku() {
   };
 }
 
-export function insertValue(value) {
+export function insertValue(val) {
   return {
     type: INSERT_VALUE,
-    payload: value
+    payload: {
+      value:val,
+      freezed: false
+    }
   };
 }
 
