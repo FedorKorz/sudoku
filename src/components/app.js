@@ -16,6 +16,7 @@ class App extends Component {
     this.togglePopup = this.togglePopup.bind(this);
     this.checkCollumn = this.checkCollumn.bind(this);
     this.findDuplicates = this.findDuplicates.bind(this);
+    this.checkAllDirections = this.checkAllDirections.bind(this);
     this.onButtonGenerateSudoku = this.onButtonGenerateSudoku.bind(this);
   }
 
@@ -44,8 +45,8 @@ class App extends Component {
     let dup = [];
 
     array = array.sort(compare);
-    console.log('Отсортированный массив');
-    console.log(array);
+    // console.log('Отсортированный массив');
+    // console.log(array);
     array.map((elem, i, a) => {
       if (a[i+1] !== undefined) {
         if (a[i+1].value == a[i].value) {
@@ -53,13 +54,13 @@ class App extends Component {
         }
       }
     });
-    console.log(dup);
+    // console.log(dup);
     return dup;
   }
 
   checkRow(row) {
-    console.log('Нужно проверить ряд ' + row);
-    console.log(this.props.state[row]);
+    // console.log('Нужно проверить ряд ' + row);
+    // console.log(this.props.state[row]);
     return this.findDuplicates(this.props.state[row].slice());
   }
 
@@ -85,6 +86,10 @@ class App extends Component {
     return this.findDuplicates(tempArr);
   }
 
+  checkAllDirections(i, j, item) {
+    return this.checkRow(i, j).includes(item) || this.checkCollumn(j, i).includes(item) || this.checkBlocks(i, j).includes(item);
+  }
+
   render() {
     return (
       <div>
@@ -94,20 +99,18 @@ class App extends Component {
               this.props.state.map((elem, i) => {
                 return <tr>
                    {elem.map((item, j) =>
-                       <td>
-                          { (item.freezed) ?
-                            <span style ={{background:'grey'}}> { this.props.state[i][j].value } </span> :
-                            <span onClick={ () => this.testMeth(i, j) }>
-                              {
-                                this.checkRow(i, j).includes(item.value) ||
-                                this.checkCollumn(j, i).includes(item.value) ||
-                                this.checkBlocks(i, j).includes(item.value) ?
-                                  <span style={{color:'red'}}> { item.value } </span> :
-                                    item.value
-                              }
-                            </span>}
-                        </td>)}
-                       </tr>})
+                      { if (item.freezed) {
+                        return <td style={{background:'#D3D3D3'}}>{this.props.state[i][j].value}</td>
+                      } else {
+                        return <td onClick={ () => this.testMeth(i, j) }>
+                          {
+                             this.checkAllDirections(i, j, item.value) ? <span style={{color:'red'}}> { item.value } </span> : item.value
+                          }
+                          </td>
+                        }
+                      })
+                   }
+                </tr>})
             }
           </tbody>
         </table>
@@ -142,3 +145,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //         <td> { item.value } </td> )}
 //     </tr>})
 // }
+
+// <tbody>
+//   {
+//     this.props.state.map((elem, i) => {
+//       return <tr>
+//          {elem.map((item, j) =>
+//              <td>
+//                 { (item.freezed) ?
+//                   <span style ={{background:'grey'}}> { this.props.state[i][j].value } </span> :
+//                   <span onClick={ () => this.testMeth(i, j) }>
+//                     {
+//                       this.checkRow(i, j).includes(item.value) ||
+//                       this.checkCollumn(j, i).includes(item.value) ||
+//                       this.checkBlocks(i, j).includes(item.value) ?
+//                         <span style={{color:'red'}}> { item.value } </span> :
+//                           item.value
+//                     }
+//                   </span>}
+//               </td>)}
+//              </tr>})
+//   }
+// </tbody>
