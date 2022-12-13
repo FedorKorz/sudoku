@@ -38,5 +38,5 @@ How to Run
 -----------------------------------
 Live Demo
 
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.loom.com/share/580fc2e643824d8eb4db9dc6a6137d61)
+[![Watch the video](https://gcdnb.pbrd.co/images/6slgZwXnmoXv.png?o=1)](https://www.loom.com/share/580fc2e643824d8eb4db9dc6a6137d61)
 
